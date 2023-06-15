@@ -5,7 +5,7 @@ using UnityEngine;
 public class Inimigo : MonoBehaviour
 {
    
-    
+    // teste
     private Transform alvo;// objeto do persongem
 
     [SerializeField]
@@ -94,7 +94,7 @@ public class Inimigo : MonoBehaviour
         if(this.alvo != null)
         {
             Gizmos.color = this.colordirecao;
-            Gizmos.DrawLine(this.transform.position, this.alvo.position);//desenha uma linha até o alvo
+            Gizmos.DrawLine(this.transform.position, this.alvo.position);//desenha uma linha atÃ© o alvo
         }
     }
 
@@ -107,7 +107,7 @@ public class Inimigo : MonoBehaviour
         {
             Vector2 posicaoatual = this.transform.position;//pega a posicao do inimigo
             Vector2 posicaoalvo = colisor.transform.position;// pega a posicao do jogador
-            Vector2 direcao = posicaoalvo - posicaoatual;// calculo da direçao dos dois
+            Vector2 direcao = posicaoalvo - posicaoatual;// calculo da direÃ§ao dos dois
             direcao = direcao.normalized;//normaliza a direcao em -1 e 1
 
            RaycastHit2D hit = Physics2D.Raycast(posicaoatual, direcao);
