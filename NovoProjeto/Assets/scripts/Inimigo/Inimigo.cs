@@ -35,12 +35,27 @@ public class Inimigo : MonoBehaviour
     [SerializeField]
     private Color colordirecao;
     // Update is called once per frame
+
+    [SerializeField]
+    private float distanciamxataque;
+
+    [SerializeField]
+    private float intervaloataque;
+
+    private float tempoespera;
+
+    private void Start()
+    {
+        this.tempoespera = this.intervaloataque;
+    }
+
     void Update()
     {
         procurarjogador();
         if(this.alvo != null)//tem alvo
         {
-          movimenta();  
+          movimenta();
+            verificarataque();
         }
         else // sem alvo
         {
@@ -48,6 +63,30 @@ public class Inimigo : MonoBehaviour
         }
         
 
+    }
+
+    private void verificarataque()
+    {
+        
+        float distancia = Vector3.Distance(this.transform.position, this.alvo.position);
+        if(distancia<= this.distanciamxataque)
+        {
+            this.tempoespera -= Time.deltaTime;
+            if (this.tempoespera <= 0)
+            {
+                this.tempoespera = this.intervaloataque;
+                atacar();
+            }
+
+            //tavcar jogador
+
+        }
+    }
+
+    private void atacar()
+    {
+        Playercontrol jogador = this.alvo.GetComponent<Playercontrol>();//pegando uma varialvel do tipo player e as propredades
+        jogador.receberdano();
     }
 
     public void movimenta()
@@ -140,4 +179,6 @@ public class Inimigo : MonoBehaviour
         this.risgbory.velocity = Vector2.zero;// zero no eixo x e y
         this.animator.SetBool("movendo", false);
     }
+
+
 }

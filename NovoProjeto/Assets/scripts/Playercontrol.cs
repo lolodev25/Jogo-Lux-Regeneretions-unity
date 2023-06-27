@@ -6,6 +6,8 @@ using UnityEngine;
 public class Playercontrol : MonoBehaviour
 {
 
+    public int hearth = 3;
+
     public GameObject bow;
     public Transform firepoint;
     private Vector3 movement;
@@ -16,10 +18,17 @@ public class Playercontrol : MonoBehaviour
     public Rigidbody2D rg;
     public int sla;
     private bool isfire;
+
+    public AudioClip footstepSound;
+    public AudioSource audioSource;
+
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = footstepSound;
         rg = GetComponent<Rigidbody2D>();
         anima = GetComponent<Animator>();
+        gamecontroler.instance.updatelive(hearth);
     }
 
 
@@ -71,6 +80,8 @@ public class Playercontrol : MonoBehaviour
 
         andar();
         atirar();
+        gamecontroler.instance.updatelive(hearth);
+
         // Verifique uma condição para parar o movimento do personagem.
 
         /*
@@ -119,9 +130,23 @@ public class Playercontrol : MonoBehaviour
         anima.SetFloat("Horizontal", movement.x);
         anima.SetFloat("Vertical", movement.y);
         anima.SetFloat("speed", movement.magnitude);
+        //sound.Play();
+        //DontDestroyOnLoad(sound);
 
         // Mova o personagem usando o Rigidbody
         rg.velocity = movement * speed;
+
+        if (movement.magnitude >= 0.1f)
+        {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
+        }
+        else if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
     }
 
     private void PlayAnimation()
@@ -134,6 +159,25 @@ public class Playercontrol : MonoBehaviour
     private void StopAnimation()
     {
         anima.SetBool("anima", false);
+    }
+
+
+    /*
+    public void demage(int dmg)
+    {
+        hearth -= dmg;
+        gamecontroler.instance.updatelive(hearth);
+        if (hearth <= 0)
+        {
+            //chama gameover
+        }
+    }
+    */
+
+    public void receberdano()
+    {
+        this.hearth--;
+        Debug.Log("numero de vidas:" + hearth);
     }
 
 }

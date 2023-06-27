@@ -54,10 +54,10 @@ public class CenaMuseuca : MonoBehaviour
 
 
         //int valor = PlayerPrefs.GetInt("valorvari");
-       // Debug.Log("oi meu chapa");
-       // Debug.Log("Funcionou: " + valor);
+        // Debug.Log("oi meu chapa");
+        // Debug.Log("Funcionou: " + valor);
         //Debug.Log("Funcionou2: " + valor2);
-        
+
 
         /*
         if (valida.validation == true && valida2.validacao == true)
@@ -78,6 +78,7 @@ public class CenaMuseuca : MonoBehaviour
 
 
        */
-        SceneManager.LoadScene(cena);
+        GerenciScene.instance.loadscena(cena);
+       // SceneManager.LoadScene(cena);
     }
 }
